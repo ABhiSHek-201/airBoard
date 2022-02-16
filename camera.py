@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import os
-from . import HandTrackingModule as htm
+import HandTrackingModule as htm
 
 class VideoCamera(object):
     def __init__(self):
