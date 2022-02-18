@@ -74,7 +74,7 @@ class VideoCamera(object):
                     elif x1>1100:
                         self.header = self.overlayList[0]
                         self.drawColor = (0,0,0)
-                        print("Eraser to be added!")
+                        # print("Eraser to be added!")
 
                 cv2.rectangle(img, (x1, y1 - 25), (x2, y2 + 25), self.drawColor, cv2.FILLED)
 
