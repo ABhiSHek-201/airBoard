@@ -39,7 +39,7 @@ class VideoCamera(object):
 
         if not success:
             print("Success print: ",success)
-            return -1
+            return b'0'
 
         # 2.find Landmarks
         img = self.detector.findHands(img)
