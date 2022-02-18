@@ -32,12 +32,14 @@ class VideoCamera(object):
         self.video.release()
 
     def get_frame(self):
-        
 
-        # while 1:
         # 1. import the image
         success,img = self.video.read()
         img = cv2.flip(img,1)
+
+        if not success:
+            print("Success print: ",success)
+            return -1
 
         # 2.find Landmarks
         img = self.detector.findHands(img)
