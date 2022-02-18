@@ -6,7 +6,6 @@ import HandTrackingModule as htm
 class VideoCamera(object):
     def __init__(self):
         self.video = cv2.VideoCapture(0)
-        print("Camera Opened : ",self.video.isOpened())
         self.video.set(3,1280)
         self.video.set(4,720)
 
@@ -40,6 +39,7 @@ class VideoCamera(object):
 
         if not success:
             print("Success print: ",success)
+            print("Camera Opened : ",self.video.isOpened())
             return b'0'
 
         # 2.find Landmarks
