@@ -14,7 +14,20 @@ class VideoCamera(object):
 
         self.overlayList = []
         self.brushThickness = 15
-        self.eraserThickness = 50
+        self.eraserThickness = 2*self.brushThickness 
+        
+        self.mode_disp = "Mode: "
+        self.mode = ""
+        self.mode_coord = (0, 600)
+
+        self.font_disp = "Size: "
+        self.font_d = str(self.brushThickness)
+        self.font_coord = (1150 ,600)
+
+        self.font = cv2.FONT_HERSHEY_SIMPLEX
+        self.fontScale = 1
+        self.color = (255,0,255)
+        self.thickness = 2
 
         for imPath in myList:
             image = cv2.imread(f'{folderPath}/{imPath}')
@@ -57,8 +70,23 @@ class VideoCamera(object):
             print(fingers)
 
             # 4.if selection mode - two fingers are up
-            if fingers[1] and fingers[2]:
+            if not fingers[0] and not fingers[1] and not fingers[2] and not fingers[3] and not fingers[4]:
+                self.mode = "Size Down"
+                if self.brushThickness > 5:
+                    self.brushThickness -= 1
+                    self.eraserThickness = 2*self.brushThickness 
+                self.font_d = str(self.brushThickness)
+
+            elif fingers[1] and fingers[2] and fingers[3] and not fingers[4]:
+                self.mode = "Size Up"
+                if self.brushThickness < 60:
+                    self.brushThickness += 1
+                    self.eraserThickness = 2*self.brushThickness 
+                self.font_d = str(self.brushThickness)
+
+            elif fingers[1] and fingers[2]:
                 self.xp, self.yp = 0, 0
+                self.mode = "Select Mode"
                 print("Select Mode")
                 # Checking the click
                 if y1<125:
@@ -85,6 +113,7 @@ class VideoCamera(object):
             elif fingers[1]:
                 cv2.circle(img,(x1,y1),15,self.drawColor,cv2.FILLED)
                 print("Write Mode")
+                self.mode = "Write Mode"
                 if self.xp ==0 and self.yp==0:
                     self.xp,self.yp = x1,y1
                 if self.drawColor == (0,0,0):
@@ -109,6 +138,8 @@ class VideoCamera(object):
         # cv2.imshow('AirBoard',img)
         # cv2.imshow('Black Console', imgCanvas)
 
+        img = cv2.putText(img, self.mode_disp + self.mode, self.mode_coord, self.font, self.fontScale, self.color, self.thickness, cv2.LINE_AA)
+        img = cv2.putText(img, self.font_disp + self.font_d, self.font_coord, self.font, self.fontScale, self.color, self.thickness, cv2.LINE_AA)
 
         # ret, frame = self.video.read()
         ret, jpeg = cv2.imencode('.jpg', img)
