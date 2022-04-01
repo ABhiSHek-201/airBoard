@@ -5,7 +5,7 @@ import HandTrackingModule as htm
 
 class VideoCamera(object):
     def __init__(self):
-        self.video = cv2.VideoCapture(0)
+        self.video = cv2.VideoCapture(-1)
         self.video.set(3,1280)
         self.video.set(4,720)
 
