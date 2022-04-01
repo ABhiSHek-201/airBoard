@@ -51,8 +51,8 @@ class VideoCamera(object):
         img = cv2.flip(img,1)
 
         if not success:
-            print("Success print: ",success)
-            print("Camera Opened : ",self.video.isOpened())
+            # print("Success print: ",success)
+            # print("Camera Opened : ",self.video.isOpened())
             return b'0'
 
         # 2.find Landmarks
@@ -67,7 +67,7 @@ class VideoCamera(object):
 
             # 3.check which fingers are up
             fingers = self.detector.fingersUp()
-            print(fingers)
+            # print(fingers)
 
             # 4.if selection mode - two fingers are up
             if not fingers[0] and not fingers[1] and not fingers[2] and not fingers[3] and not fingers[4]:
@@ -87,7 +87,7 @@ class VideoCamera(object):
             elif fingers[1] and fingers[2]:
                 self.xp, self.yp = 0, 0
                 self.mode = "Select Mode"
-                print("Select Mode")
+                # print("Select Mode")
                 # Checking the click
                 if y1<125:
                     if 320<x1<420:
@@ -112,7 +112,7 @@ class VideoCamera(object):
             # 5. Drawing mode - Index finger is up
             elif fingers[1]:
                 cv2.circle(img,(x1,y1),15,self.drawColor,cv2.FILLED)
-                print("Write Mode")
+                # print("Write Mode")
                 self.mode = "Write Mode"
                 if self.xp ==0 and self.yp==0:
                     self.xp,self.yp = x1,y1
