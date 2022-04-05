@@ -1,7 +1,10 @@
 from flask import Flask, Response,render_template
 from camera import VideoCamera
+import cv2
 
 app = Flask(__name__)
+
+cap = cv2.VideoCapture(0)
 
 @app.route("/")
 def index():
@@ -19,7 +22,7 @@ def gen(camera):
 
 @app.route("/video_feed")
 def video_feed():
-    return Response(gen(VideoCamera()), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(gen(VideoCamera(cap)), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=2204, debug = False)
